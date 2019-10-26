@@ -13,73 +13,69 @@ class Error(BaseModel):
 
 
 instance_id = Path(
-    default=...,
-    title='Instance Id',
-    description='instance id of instance'
+    default=..., title="Instance Id", description="instance id of instance"
 )
 
 binding_id = Path(
-    default=...,
-    title='Binding Id',
-    description='Binding id of service binding'
+    default=..., title="Binding Id", description="Binding id of service binding"
 )
 
 accepts_incomplete = Query(
     default=None,
-    title='Accepts Incomplete',
-    description='Asynchronous operations supported'
+    title="Accepts Incomplete",
+    description="Asynchronous operations supported",
 )
 
 service_id = Query(
     default=...,
-    title='Service Id',
-    description='id of the service associated with the instance'
+    title="Service Id",
+    description="id of the service associated with the instance",
 )
 
 plan_id = Query(
     default=...,
-    title='Plan Id',
-    description='id of the plan associated with the instance'
+    title="Plan Id",
+    description="id of the plan associated with the instance",
 )
 
 operation_id = Query(
     default=...,
-    title='Operation Id',
-    description='a provided identifier for the operation'
+    title="Operation Id",
+    description="a provided identifier for the operation",
 )
 
 api_version = Header(
-    default='2.13',
-    title='X-Broker-API-Version',
-    description='version number of the Service Broker API that the Platform will use',
+    default="2.13",
+    title="X-Broker-API-Version",
+    description="version number of the Service Broker API that the Platform will use",
 )
 
 originating_identity = Header(
     default=None,
-    title='X-Broker-API-Originating-Identity',
-    description='identity of the user that initiated the request from the Platform',
+    title="X-Broker-API-Originating-Identity",
+    description="identity of the user that initiated the request from the Platform",
 )
 
 
 class ModeEnum(str, Enum):
-    read = 'r'
-    readwrite = 'rw'
+    read = "r"
+    readwrite = "rw"
 
 
 class ProtocolEnum(str, Enum):
-    tcp = 'tcp'
-    udp = 'udp'
-    all = 'all'
+    tcp = "tcp"
+    udp = "udp"
+    all = "all"
 
 
 class DeviceTypeEnum(str, Enum):
-    shared = 'shared'
+    shared = "shared"
 
 
 class StateEnum(str, Enum):
-    in_progress = 'in progress'
-    failed = 'failed'
-    succeeded = 'succeeded'
+    in_progress = "in progress"
+    failed = "failed"
+    succeeded = "succeeded"
 
 
 class LastOperationResource(BaseModel):
@@ -187,7 +183,7 @@ class MaintenanceInfo(BaseModel):
 class SchemaParameters(BaseModel):
     parameters: dict
 
-    @validator('parameters')
+    @validator("parameters")
     def json_schema(cls, v):
         jsonschema.draft4_format_checker.check(v)
 
