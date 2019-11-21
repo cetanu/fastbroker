@@ -24,6 +24,7 @@ def build_app():
 
     return api
 
+
 # TODO: remove "example"
 config_location = os.getenv("FASTBROKER_CONFIG", "example_config.json")
 with open(config_location) as f:
