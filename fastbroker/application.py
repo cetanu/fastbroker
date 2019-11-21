@@ -1,8 +1,12 @@
+import os
+import json
 import uvicorn
 from fastapi import FastAPI
 from starlette.responses import UJSONResponse
 
 from fastbroker import __versionstr__
+from fastbroker.data import db_mapping
+from fastbroker.config import FastBrokerConfig
 from fastbroker.routers import catalog, service_instances, service_bindings
 
 
@@ -20,8 +24,13 @@ def build_app():
 
     return api
 
+# TODO: remove "example"
+config_location = os.getenv("FASTBROKER_CONFIG", "example_config.json")
+with open(config_location) as f:
+    config = FastBrokerConfig(**json.load(f))
 
 app = build_app()
+db = db_mapping[config.database.type]
 
 
 if __name__ == "__main__":

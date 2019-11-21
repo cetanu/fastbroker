@@ -1,0 +1,5 @@
+{
+  "database": {
+    "type": "in_memory"
+  }
+}
