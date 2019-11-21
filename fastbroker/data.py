@@ -118,8 +118,8 @@ class InMemoryDatastore(BaseDatastore):
     ) -> None:
         self.data['bindings'].pop(binding_id, None)
 
-    update = create_service_instance
-    upsert = create_service_instance
+    update_service_instance = create_service_instance
+    upsert_service_instance = create_service_instance
 
 
 db_mapping = {DatabaseTypes.in_memory: InMemoryDatastore}
