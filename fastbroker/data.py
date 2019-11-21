@@ -51,12 +51,15 @@ class BaseDatastore:
 
 class InMemoryDatastore(BaseDatastore):
     def __init__(self):
-        self.data = dict()
+        self.data = dict(
+            instances=dict(),
+            bindings=dict(),
+        )
 
     def get_service_instance(
         self, instance_id: str, service_id: str = None, plan_id: str = None
     ) -> dict:
-        instance = self.data[instance_id]
+        instance = self.data['instances'][instance_id]
         if service_id is not None:
             assert instance["service_id"] == service_id
         if plan_id is not None:
@@ -66,7 +69,7 @@ class InMemoryDatastore(BaseDatastore):
     def create_service_instance(
         self, instance_id: str, service_id: str, plan_id: str, parameters: dict
     ) -> None:
-        self.data[instance_id] = {
+        self.data['instances'][instance_id] = {
             "instance_id": instance_id,
             "service_id": service_id,
             "plan_id": plan_id,
@@ -76,7 +79,7 @@ class InMemoryDatastore(BaseDatastore):
     def delete_service_instance(
         self, instance_id: str, service_id: str, plan_id: str
     ) -> None:
-        self.data.pop(instance_id, None)
+        self.data['instances'].pop(instance_id, None)
 
     def get_service_binding(
         self,
@@ -85,7 +88,7 @@ class InMemoryDatastore(BaseDatastore):
         service_id: str = None,
         plan_id: str = None,
     ) -> dict:
-        binding = self.data[binding_id]
+        binding = self.data['bindings'][binding_id]
         if service_id is not None:
             assert binding["service_id"] == service_id
         if plan_id is not None:
@@ -101,7 +104,7 @@ class InMemoryDatastore(BaseDatastore):
         parameters: dict,
         credentials: dict,
     ) -> None:
-        self.data[binding_id] = {
+        self.data['bindings'][binding_id] = {
             "instance_id": instance_id,
             "binding_id": binding_id,
             "service_id": service_id,
@@ -113,7 +116,7 @@ class InMemoryDatastore(BaseDatastore):
     def unbind_service_instance(
         self, instance_id: str, binding_id: str, service_id: str, plan_id: str
     ) -> None:
-        self.data.pop(binding_id, None)
+        self.data['bindings'].pop(binding_id, None)
 
     update = create_service_instance
     upsert = create_service_instance
